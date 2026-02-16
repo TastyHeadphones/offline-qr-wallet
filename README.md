@@ -26,10 +26,10 @@ Open `ios/OfflineQRWallet/Package.swift` in Xcode and integrate the `OfflineQRWa
 ### 3) Run Tests
 
 ```bash
-cd /Users/young/Github/offline-qr-wallet/backend
+cd backend
 npm test
 
-cd /Users/young/Github/offline-qr-wallet/ios/OfflineQRWallet
+cd ../ios/OfflineQRWallet
 swift test
 ```
 
@@ -60,7 +60,6 @@ swift test
 Use the bundled ImageGen script (requires `OPENAI_API_KEY`):
 
 ```bash
-cd /Users/young/Github/offline-qr-wallet
 ./scripts/generate_app_icon.sh
 ```
 

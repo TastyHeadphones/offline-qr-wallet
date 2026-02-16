@@ -3,7 +3,7 @@
 ## Start
 
 ```bash
-cd /Users/young/Github/offline-qr-wallet/backend
+cd backend
 npm install
 npm run dev
 ```
