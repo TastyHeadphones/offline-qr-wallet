@@ -7,6 +7,16 @@ const port = Number(process.env.PORT ?? 8080);
 const logger = pino({ level: process.env.LOG_LEVEL ?? "info" });
 
 const app = express();
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+  if (req.method === "OPTIONS") {
+    res.status(204).send();
+    return;
+  }
+  next();
+});
 app.use(express.json({ limit: "1mb" }));
 app.use((req, res, next) => {
   const started = Date.now();

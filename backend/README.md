@@ -40,3 +40,4 @@ Base URL: `http://localhost:8080`
 - Persistence is in-memory in this baseline.
 - Signature verification is stubbed and must be replaced with real asymmetric verification.
 - Risk policy is centrally enforced in sync ingestion.
+- CORS is enabled (`*`) for browser/web-console integration during internal deployment.

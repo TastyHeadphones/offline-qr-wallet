@@ -1,11 +1,54 @@
 # offline-qr-wallet
 
-Baseline implementation for a closed-loop wallet with IC-card-like top-up and offline debit using two-way QR exchange between iPhones.
+Baseline implementation for a closed-loop wallet with IC-card-like top-up and offline debit using two-way QR exchange, with iOS clients, a browser web console, and an MCU-oriented C++ core for embedded integrations.
+
+## Project Introduction (Graph)
+
+```mermaid
+flowchart TD
+  subgraph iOS["iOS Clients"]
+    Payer["Payer Role (iPhone)"]
+    Cashier["Cashier Role (iPhone)"]
+    AdminIOS["Admin Role (iPhone)"]
+  end
+
+  Web["Web Console (Browser-only devices)"]
+  Cpp["C++ Core (STM32/MCU firmware)"]
+
+  subgraph Backend["Backend Services"]
+    IAM["Account and Device Provisioning"]
+    Wallet["Wallet and Ledger"]
+    Sync["Offline Transaction Sync"]
+    Risk["Risk and Policy Engine"]
+    Settle["Settlement and Reconciliation"]
+    Audit["Audit and History"]
+  end
+
+  Payer <-->|"Two-way QR (offline) Intent/Auth/Receipt"| Cashier
+  Cashier -->|"Connectivity returns: sync queue"| Sync
+  Sync --> Wallet
+  Sync --> Risk
+  IAM --> Wallet
+  Wallet --> Settle
+  Wallet --> Audit
+  AdminIOS --> IAM
+  AdminIOS --> Wallet
+  AdminIOS --> Settle
+  AdminIOS --> Audit
+  Web --> IAM
+  Web --> Wallet
+  Web --> Sync
+  Web --> Audit
+  Cpp <-->|"Handshake models and state machine"| Payer
+  Cpp <-->|"Handshake models and state machine"| Cashier
+```
 
 ## Repository Layout
 
 - `backend/`: TypeScript REST backend for provisioning, top-up, offline transaction sync, reconciliation, and audit.
 - `ios/OfflineQRWallet/`: Swift package with iOS client modules (key identity, two-way QR handshake, local journal, sync abstraction).
+- `web/`: browser-based operations console for account/device/top-up/risk/transfer/sync operations.
+- `cpp/stm32-wallet-core/`: portable C++ core for STM32/MCU integration of offline handshake and transaction states.
 - `docs/`: high-level architecture notes.
 
 ## Quick Start
@@ -13,6 +56,7 @@ Baseline implementation for a closed-loop wallet with IC-card-like top-up and of
 ### 1) Backend
 
 ```bash
+cd backend
 npm install
 npm run dev
 ```
@@ -23,7 +67,24 @@ Backend runs on `http://localhost:8080` by default.
 
 Open `ios/OfflineQRWallet/Package.swift` in Xcode and integrate the `OfflineQRWallet` library into payer/cashier app targets.
 
-### 3) Run Tests
+### 3) Web Console
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+### 4) STM32 C++ Core
+
+```bash
+cd cpp/stm32-wallet-core
+cmake -S . -B build
+cmake --build build
+ctest --test-dir build
+```
+
+### 5) Run Tests
 
 ```bash
 cd backend
@@ -48,6 +109,8 @@ swift test
 - Local transaction persistence contracts and in-memory stores
 - Async sync coordinator API for uploading pending offline transactions
 - Swift backend API client for provisioning, top-up, refund, freeze, card transfer, balance, and offline sync
+- Browser web console for backend operations on non-iOS deployment devices
+- Embedded C++ handshake/state core for STM32-oriented firmware integration
 
 ## Current Scope Notes
 

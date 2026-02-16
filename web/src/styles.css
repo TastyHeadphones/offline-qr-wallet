@@ -1,0 +1,148 @@
+:root {
+  --bg: #f4f7f9;
+  --card: #ffffff;
+  --text: #102636;
+  --muted: #5f7282;
+  --accent: #0e8fb4;
+  --accent-2: #17c1b6;
+  --danger: #b23e3e;
+  --border: #d5dde3;
+  --shadow: 0 12px 32px rgba(16, 38, 54, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(23, 193, 182, 0.18), transparent 40%),
+    radial-gradient(circle at 90% 20%, rgba(14, 143, 180, 0.18), transparent 45%),
+    var(--bg);
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.container {
+  width: min(1200px, 94vw);
+  margin: 32px auto 52px;
+}
+
+.header {
+  background: linear-gradient(120deg, #0f4256, #0a2f3d);
+  color: #e7f6fa;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.3rem, 1.8vw, 2rem);
+}
+
+.header p {
+  margin: 0;
+  color: #c6e9f3;
+}
+
+.backend-row {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr auto;
+}
+
+.grid {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+form {
+  display: grid;
+  gap: 8px;
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 10px;
+  background: #fbfdfe;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+
+button {
+  border-radius: 10px;
+  border: none;
+  padding: 10px 12px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.04);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.output {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #dfe7eb;
+  background: #fbfdff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  min-height: 64px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.output.error {
+  border-color: #edc5c5;
+  background: #fff7f7;
+  color: var(--danger);
+}
