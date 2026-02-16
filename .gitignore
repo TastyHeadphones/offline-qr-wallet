@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Node/TypeScript
+node_modules/
+backend/node_modules/
+backend/dist/
+
+# SwiftPM
+.build/
+ios/OfflineQRWallet/.build/
+ios/OfflineQRWallet/.swiftpm/
+
+# IDE
+*.xcworkspace
+*.xcuserstate
+*.xcuserdata/
+
+# Generated media
+output/imagegen/
